@@ -1,9 +1,13 @@
 name: 'fm-backend-pre-check'
 description: 'Custom FM Backend actions'
+inputs:
+  NPM_TOKEN:
+     description: "npm access token"
+     required: true
 runs:
   using: "composite"
   steps:
     - run: ${{ github.action_path }}/validate-tests.sh
       shell: bash
-    - run: echo '//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN  }}' > ${{ github.workspace }}/.npmrc
+    - run: echo '//registry.npmjs.org/:_authToken=${{ inputs.NPM_TOKEN  }}' > ${{ github.workspace }}/.npmrc
       shell: bash
