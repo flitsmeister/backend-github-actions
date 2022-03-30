@@ -1,7 +1,7 @@
 name: 'fm-backend-pre-check'
 description: 'Custom FM Backend actions'
 inputs:
-  NPM_TOKEN:
+  npm_token:
      description: "npm access token"
      required: true
 runs:
