@@ -3,5 +3,7 @@ description: 'Custom FM Backend actions'
 runs:
   using: "composite"
   steps:
-    - run: ${{ github.action_path }}/run.sh
+    - run: ${{ github.action_path }}/validate-tests.sh
+      shell: bash
+    - run: echo '//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN  }}' > ${{ github.workspace }}/.npmrc
       shell: bash
