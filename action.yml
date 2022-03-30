@@ -1,0 +1,7 @@
+name: 'fm-backend-pre-check'
+description: 'Custom FM Backend actions'
+runs:
+  using: "composite"
+  steps:
+    - run: ${{ github.action_path }}/run.sh
+      shell: bash
