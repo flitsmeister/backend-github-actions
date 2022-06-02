@@ -1,6 +1,6 @@
 
 echo "Checking for skipped tests..."
-TEST_CHECK=$(git grep -n '\(test\|experiment\|suite\).\(only\|skip\)' -- '*.js') RCODE=$?
+TEST_CHECK=$(git grep -n '\(test\|experiment\|suite\).\(only\|skip\)(' -- '*.js') RCODE=$?
 if [ $RCODE -ne 1 ]; then
   echo "STOP: You're still skipping tests"
   echo "$TEST_CHECK"
