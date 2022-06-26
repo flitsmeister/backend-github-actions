@@ -17,7 +17,17 @@ jobs:
     - uses: actions/setup-node@v3
       with:
         node-version: '14'
+        cache: 'npm'
 
     - run: npm install
       env:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+    - run: npm test
+    - run: ./node_modules/eslint/bin/eslint.js --quiet -c node_modules/@flitsmeister/eslint/.eslintrc --ignore-pattern node_modules .
+    - run: npm run codecov
+    - uses: codecov/codecov-action@v2
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        files: coverage/coverage-final.json
+        fail_ci_if_error: true
