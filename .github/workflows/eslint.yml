@@ -11,6 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+    - uses: flitsmeister/backend-actions-check@main
+      with:
+        npm_token: ${{ secrets.NPM_TOKEN }}
     - uses: actions/setup-node@v3
       with:
         node-version: '14'
@@ -18,9 +21,6 @@ jobs:
     - uses: bahmutov/npm-install@v1
       with:
         useLockFile: false
-      env:
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
 
     - run: ./node_modules/eslint/bin/eslint.js --quiet -c node_modules/@flitsmeister/eslint/.eslintrc --ignore-pattern node_modules .
 
