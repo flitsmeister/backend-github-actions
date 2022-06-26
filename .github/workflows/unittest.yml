@@ -8,7 +8,6 @@ on:
       CODECOV_TOKEN:
         required: true
 
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -21,9 +20,9 @@ jobs:
       with:
         node-version: '14'
 
-    - run: npm install
-      env:
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    - uses: bahmutov/npm-install@v1
+      with:
+        useLockFile: false
 
     - run: npm test
     - run: ./node_modules/eslint/bin/eslint.js --quiet -c node_modules/@flitsmeister/eslint/.eslintrc --ignore-pattern node_modules .
