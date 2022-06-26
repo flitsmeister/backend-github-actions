@@ -1,21 +1,16 @@
-name: Unit tests
+name: Eslint
 
 on:
   workflow_call:
     secrets:
       NPM_TOKEN:
         required: true
-      CODECOV_TOKEN:
-        required: true
 
 jobs:
-  unittest:
+  eslint:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - uses: flitsmeister/backend-actions-check@main
-      with:
-        npm_token: ${{ secrets.NPM_TOKEN }}
     - uses: actions/setup-node@v3
       with:
         node-version: '14'
@@ -24,6 +19,5 @@ jobs:
       with:
         useLockFile: false
 
-    - run: npm test
     - run: ./node_modules/eslint/bin/eslint.js --quiet -c node_modules/@flitsmeister/eslint/.eslintrc --ignore-pattern node_modules .
 
