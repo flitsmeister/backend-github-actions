@@ -21,6 +21,7 @@ jobs:
         node-version: '14'
 
     - name: Cache node modules
+      id: cache-npm
       uses: actions/cache@v3
       with:
         path: node_modules
@@ -31,7 +32,8 @@ jobs:
       env:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-    - name: Cache node modules
+    - if: ${{ steps.cache-npm.outputs.cache-hit == 'false' }}
+      name: Cache node modules
       uses: actions/cache@v3
       with:
         path: node_modules
