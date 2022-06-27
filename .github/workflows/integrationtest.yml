@@ -1,0 +1,30 @@
+name: Integrationtest
+
+on:
+  workflow_call:
+    inputs:
+      mongo:
+        required: true
+        type: boolean
+
+jobs:
+  integrationtest:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '14'
+
+    - name: Cache node modules
+      uses: actions/cache@v3
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-cache-node-modules-${{ hashFiles('package.json') }}
+
+    - name: Start MongoDB
+      uses: supercharge/mongodb-github-action@1.7.0
+      if: ${{ input.mongo }}
+      with:
+        mongodb-version: '4.2'
+    - run: npm run integrationtest
