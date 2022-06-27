@@ -1,0 +1,45 @@
+name: Integrationtest
+
+on:
+  workflow_call:
+    inputs:
+      redis:
+        required: false
+        type: boolean
+      mongo:
+        required: false
+        type: boolean
+      mysql:
+        required: false
+        type: boolean
+
+jobs:
+  integrationtest:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '14'
+
+    - name: Cache node modules
+      uses: actions/cache@v3
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-cache-node-modules-${{ hashFiles('package.json') }}
+
+    - name: MongoDB
+      if: ${{ inputs.mongo }}
+      uses: supercharge/mongodb-github-action@1.7.0
+      with:
+        mongodb-version: '4.2'
+
+    - name: Redis
+      if: ${{ inputs.redis }}
+      run: sudo apt-get install -y redis-server
+    - name: Mysql
+      if: ${{ inputs.mysql }}
+      uses: shogo82148/actions-setup-mysql@v1
+      with:
+        mysql-version: '5.7'
+    - run: npm run integrationtest

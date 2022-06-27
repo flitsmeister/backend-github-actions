@@ -1,0 +1,31 @@
+name: Setup project
+
+on:
+  workflow_call:
+    secrets:
+      NPM_TOKEN:
+        required: true
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    if: ${{ !github.event.pull_request.draft }}
+    steps:
+    - uses: actions/checkout@v3
+    - uses: flitsmeister/backend-actions-check@main
+      with:
+        npm_token: ${{ secrets.NPM_TOKEN }}
+
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '14'
+
+    - run: npm install
+      env:
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+    - name: Cache node modules
+      uses: actions/cache@v3
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-cache-node-modules-${{ hashFiles('package.json') }}
