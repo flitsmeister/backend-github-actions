@@ -20,22 +20,12 @@ jobs:
       with:
         node-version: '14'
 
-    - name: Cache node modules
-      id: cache-npm
-      uses: actions/cache@v3
-      with:
-        path: node_modules
-        key: ${{ runner.os }}-cache-node-modules-${{ hashFiles('package.json') }}
-
-    - if: ${{ steps.cache-npm.outputs.cache-hit == 'false' }}
-      continue-on-error: true
-      run: npm install
+    - run: npm install
       env:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-    - if: ${{ steps.cache-npm.outputs.cache-hit == 'false' }}
-      continue-on-error: true
-      name: Cache node modules
+    - name: Cache node modules
+      id: cache-npm
       uses: actions/cache@v3
       with:
         path: node_modules
