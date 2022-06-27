@@ -24,7 +24,7 @@ jobs:
 
     - name: Start MongoDB
       uses: supercharge/mongodb-github-action@1.7.0
-      if: ${{ input.mongo }}
+      if: ${{ inputs.mongo }}
       with:
         mongodb-version: '4.2'
     - run: npm run integrationtest
