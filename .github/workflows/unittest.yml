@@ -3,7 +3,7 @@ name: Unit tests
 on:
   workflow_call:
     secrets:
-      NPM_TOKEN:
+      CODECOV_TOKEN:
         required: true
 
 jobs:
@@ -11,16 +11,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - uses: flitsmeister/backend-actions-check@main
-      with:
-        npm_token: ${{ secrets.NPM_TOKEN }}
     - uses: actions/setup-node@v3
       with:
         node-version: '14'
 
-    - uses: bahmutov/npm-install@v1
+    - name: Cache node modules
+      uses: actions/cache@v3
       with:
-        useLockFile: false
+        path: node_modules
+        key: ${{ runner.os }}-cache-node-modules-${{ hashFiles('package.json') }}
 
     - run: npm test
-
+    - run: ./node_modules/eslint/bin/eslint.js --quiet -c node_modules/@flitsmeister/eslint/.eslintrc --ignore-pattern node_modules .
+    - run: npm run codecov
+    - uses: codecov/codecov-action@v2
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        files: coverage/coverage-final.json
+        fail_ci_if_error: true
