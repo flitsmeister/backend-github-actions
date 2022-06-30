@@ -1,0 +1,27 @@
+name: Deploy
+
+on:
+  workflow_call:
+    secrets:
+      NPM_TOKEN:
+        required: true
+
+jobs:
+  deploy:
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: flitsmeister/backend-github-actions@master
+      with:
+        npm_token: ${{ secrets.NPM_TOKEN }}
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '14'
+
+    - run: npm installs
+      env:
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+    - run: sed "s,0.0.0,${{ github.event.release.tag_name }}," -i package.json; npm publish
+      env:
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
