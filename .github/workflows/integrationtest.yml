@@ -12,6 +12,12 @@ on:
       mysql:
         required: false
         type: boolean
+      postgres:
+        required: false
+        type: boolean
+      postgres-name:
+        required: false
+        type: string
 
 jobs:
   integrationtest:
@@ -42,4 +48,12 @@ jobs:
       uses: shogo82148/actions-setup-mysql@v1
       with:
         mysql-version: '5.7'
+    - name: Postgres
+      if: ${{ inputs.postgres }}
+      uses: ireznik/postgis-action@v12
+      with:
+        postgresql version: '12-master'
+        postgresql db: ${{ inputs.postgres-name }}
+        postgresql user: ${{ inputs.postgres-name }}
+        postgresql password: ${{ inputs.postgres-name }}
     - run: npm run integrationtest
