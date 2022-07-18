@@ -40,14 +40,6 @@ jobs:
       with:
         mongodb-version: '4.2'
 
-    - name: Redis
-      if: ${{ inputs.redis }}
-      run: sudo apt-get install -y redis-server
-    - name: Mysql
-      if: ${{ inputs.mysql }}
-      uses: shogo82148/actions-setup-mysql@v1
-      with:
-        mysql-version: '5.7'
     - name: Postgres
       if: ${{ inputs.postgres }}
       uses: ireznik/postgis-action@v12
@@ -56,4 +48,15 @@ jobs:
         postgresql db: ${{ inputs.postgres-name }}
         postgresql user: ${{ inputs.postgres-name }}
         postgresql password: ${{ inputs.postgres-name }}
+
+    - name: Redis
+      if: ${{ inputs.redis }}
+      run: sudo apt-get install -y redis-server
+
+    - name: Mysql
+      if: ${{ inputs.mysql }}
+      uses: shogo82148/actions-setup-mysql@v1
+      with:
+        mysql-version: '5.7'
+
     - run: npm run integrationtest
