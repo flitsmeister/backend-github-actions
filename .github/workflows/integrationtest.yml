@@ -49,6 +49,11 @@ jobs:
         postgresql user: ${{ inputs.postgres-name }}
         postgresql password: ${{ inputs.postgres-name }}
 
+    - name: Sleep for 10 seconds for startup of postgres
+      if: ${{ inputs.postgres }}
+      run: sleep 10s
+      shell: bash
+
     - name: Redis
       if: ${{ inputs.redis }}
       run: sudo apt-get install -y redis-server
