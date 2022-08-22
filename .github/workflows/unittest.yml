@@ -22,7 +22,7 @@ jobs:
         key: ${{ runner.os }}-cache-node-modules-${{ hashFiles('package.json') }}
 
     - run: npm test
-    - run: ./node_modules/eslint/bin/eslint.js --quiet -c node_modules/@flitsmeister/eslint/.eslintrc --ignore-pattern node_modules .
+    - run: ./node_modules/eslint/bin/eslint.js --quiet -c node_modules/@flitsmeister/eslint/.eslintrc --ignore-pattern node_modules --ignore-pattern public .
     - run: npm run codecov
     - uses: codecov/codecov-action@v2
       with:
