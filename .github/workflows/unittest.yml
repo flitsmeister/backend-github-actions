@@ -21,6 +21,13 @@ jobs:
         path: node_modules
         key: ${{ runner.os }}-cache-node-modules-${{ hashFiles('package.json') }}
 
+    - run: ls -al
+    - run: ls -al node_modules
+    - run: ls -al node_modules/@hapi
+    - run: ls -al node_modules/@hapi/lab
+    - run: ls -al node_modules/@hapi/lab/bin
+    - run: pwd
+
     - run: npm test
     - run: ./node_modules/eslint/bin/eslint.js --quiet -c node_modules/@flitsmeister/eslint/.eslintrc --ignore-pattern node_modules --ignore-pattern public .
     - run: npm run codecov
