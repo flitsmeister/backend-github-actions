@@ -9,19 +9,21 @@ on:
 jobs:
   unittest:
     runs-on: ubuntu-latest
-    env:
-      PACKAGE_JSON_HASH: ${{ hashFiles('package.json') }}
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
       with:
         node-version: '14'
 
+    - name: Remember package.json hash
+      id: vars
+      run: echo ::set-output name=package_json_hash::$(cat package.json | openssl dgst -sha256)
+
     - name: Cache node modules
       uses: actions/cache@v3
       with:
         path: node_modules
-        key: ${{ runner.os }}-cache-node-modules-${{ env.PACKAGE_JSON_HASH }}
+        key: ${{ runner.os }}-cache-node-modules-${{steps.vars.outputs.package_json_hash}}
 
     - run: npm test
     - run: ./node_modules/eslint/bin/eslint.js --quiet -c node_modules/@flitsmeister/eslint/.eslintrc --ignore-pattern node_modules --ignore-pattern public .
