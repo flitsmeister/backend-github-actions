@@ -15,18 +15,14 @@ jobs:
       with:
         node-version: '14'
 
+    - run: export PACKAGE_JSON_HASH=$(cat package.json | openssl dgst -sha256)
+    - run: echo "package.json hash = $PACKAGE_JSON_HASH" && cat package.json
+
     - name: Cache node modules
       uses: actions/cache@v3
       with:
         path: node_modules
-        key: ${{ runner.os }}-cache-node-modules-${{ hashFiles('package.json') }}
-
-    - run: ls -al
-    - run: ls -al node_modules
-    - run: ls -al node_modules/@hapi
-    - run: ls -al node_modules/@hapi/lab
-    - run: ls -al node_modules/@hapi/lab/bin
-    - run: pwd
+        key: ${{ runner.os }}-cache-node-modules-${{ env.PACKAGE_JSON_HASH }}
 
     - run: npm test
     - run: ./node_modules/eslint/bin/eslint.js --quiet -c node_modules/@flitsmeister/eslint/.eslintrc --ignore-pattern node_modules --ignore-pattern public .

@@ -20,13 +20,19 @@ jobs:
       with:
         node-version: '14'
 
+    - run: export PACKAGE_JSON_HASH=$(cat package.json | openssl dgst -sha256)
+    - run: echo "package.json hash = $PACKAGE_JSON_HASH" && cat package.json
+
     - run: npm install
       env:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+    - run: export PACKAGE_JSON_HASH=$(cat package.json | openssl dgst -sha256)
+    - run: echo "package.json hash = $PACKAGE_JSON_HASH" && cat package.json
 
     - name: Cache node modules
       id: cache-npm
       uses: actions/cache@v3
       with:
         path: node_modules
-        key: ${{ runner.os }}-cache-node-modules-${{ hashFiles('package.json') }}
+        key: ${{ runner.os }}-cache-node-modules-${{ env.PACKAGE_JSON_HASH }}
