@@ -20,17 +20,19 @@ jobs:
       with:
         node-version: '14'
 
-    - run: echo "Old hash = ${{ hashFiles('package.json') }}"
-    - run: export PACKAGE_JSON_HASH=$(cat package.json | openssl dgst -sha256)
-    - run: echo "package.json hash = $PACKAGE_JSON_HASH" && cat package.json
+    - run: |
+        echo "Old hash = ${{ hashFiles('package.json') }}"
+        echo "PACKAGE_JSON_HASH=$(cat package.json | openssl dgst -sha256)" >> $GITHUB_ENV
+        echo "package.json hash = ${{ env.PACKAGE_JSON_HASH }} && cat package.json
 
     - run: npm install
       env:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-    - run: echo "Old hash = ${{ hashFiles('package.json') }}"
-    - run: export PACKAGE_JSON_HASH=$(cat package.json | openssl dgst -sha256)
-    - run: echo "package.json hash = $PACKAGE_JSON_HASH" && cat package.json
+    - run: |
+        echo "Old hash = ${{ hashFiles('package.json') }}"
+        echo "PACKAGE_JSON_HASH=$(cat package.json | openssl dgst -sha256)" >> $GITHUB_ENV
+        echo "package.json hash = ${{ env.PACKAGE_JSON_HASH }} && cat package.json
 
     - name: Cache node modules
       id: cache-npm
