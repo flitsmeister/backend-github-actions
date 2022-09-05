@@ -23,7 +23,7 @@ jobs:
     - run: |
         echo "Old hash = ${{ hashFiles('package.json') }}"
         echo "PACKAGE_JSON_HASH=$(cat package.json | openssl dgst -sha256)" >> $GITHUB_ENV
-        echo "package.json hash = ${{ env.PACKAGE_JSON_HASH }} && cat package.json
+        echo "package.json hash = ${{ env.PACKAGE_JSON_HASH }}" && cat package.json
 
     - run: npm install
       env:
@@ -32,7 +32,7 @@ jobs:
     - run: |
         echo "Old hash = ${{ hashFiles('package.json') }}"
         echo "PACKAGE_JSON_HASH=$(cat package.json | openssl dgst -sha256)" >> $GITHUB_ENV
-        echo "package.json hash = ${{ env.PACKAGE_JSON_HASH }} && cat package.json
+        echo "package.json hash = ${{ env.PACKAGE_JSON_HASH }}" && cat package.json
 
     - name: Cache node modules
       id: cache-npm
