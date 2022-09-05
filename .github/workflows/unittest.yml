@@ -9,16 +9,13 @@ on:
 jobs:
   unittest:
     runs-on: ubuntu-latest
+    env:
+      PACKAGE_JSON_HASH: hashFiles('package.json')
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
       with:
         node-version: '14'
-
-    - run: |
-        echo "Old hash = ${{ hashFiles('package.json') }}"
-        echo "PACKAGE_JSON_HASH=$(cat package.json | openssl dgst -sha256)" >> $GITHUB_ENV
-        echo "package.json hash = ${{ env.PACKAGE_JSON_HASH }}" && cat package.json
 
     - name: Cache node modules
       uses: actions/cache@v3
