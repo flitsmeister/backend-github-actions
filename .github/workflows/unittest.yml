@@ -10,7 +10,7 @@ jobs:
   unittest:
     runs-on: ubuntu-latest
     env:
-      PACKAGE_JSON_HASH: hashFiles('package.json')
+      PACKAGE_JSON_HASH: ${{ hashFiles('package.json') }}
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
