@@ -28,11 +28,15 @@ jobs:
       with:
         node-version: '14'
 
+    - name: Remember package.json hash
+      id: vars
+      run: echo ::set-output name=package_json_hash::$(cat package.json | openssl dgst -sha256 -binary | xxd -p  -c 256)
+
     - name: Cache node modules
       uses: actions/cache@v3
       with:
         path: node_modules
-        key: ${{ runner.os }}-cache-node-modules-${{ hashFiles('package.json') }}
+        key: ${{ runner.os }}-cache-node-modules-${{steps.vars.outputs.package_json_hash}}
 
     - name: MongoDB
       if: ${{ inputs.mongo }}
