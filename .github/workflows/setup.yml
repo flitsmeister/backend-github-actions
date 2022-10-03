@@ -28,6 +28,8 @@ jobs:
       env:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+    - run: ls -al && ls -al node_modules && ls -al node_modules/@hapi/lab/bin
+
     - name: Cache node modules
       id: cache-npm
       uses: actions/cache@v3
