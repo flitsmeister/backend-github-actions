@@ -24,11 +24,9 @@ jobs:
       id: vars
       run: echo ::set-output name=package_json_hash::$(cat package.json | openssl dgst -sha256 -binary | xxd -p -c 256)
 
-    - run: npm update
+    - run: npm update --dev
       env:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-    - run: npm version && ls -al && ls -al node_modules && ls -al node_modules/@hapi && ls -al node_modules/@hapi/lab && ls -al node_modules/@hapi/lab/bin
 
     - name: Cache node modules
       id: cache-npm
