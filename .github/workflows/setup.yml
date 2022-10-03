@@ -24,7 +24,7 @@ jobs:
       id: vars
       run: echo ::set-output name=package_json_hash::$(cat package.json | openssl dgst -sha256 -binary | xxd -p -c 256)
 
-    - run: npm install
+    - run: npm update
       env:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
