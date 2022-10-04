@@ -1,0 +1,36 @@
+name: Setup project
+
+on:
+  workflow_call:
+    secrets:
+      NPM_TOKEN:
+        required: true
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    if: ${{ !github.event.pull_request.draft }}
+    steps:
+    - uses: actions/checkout@v3
+    - uses: flitsmeister/backend-github-actions@master
+      with:
+        npm_token: ${{ secrets.NPM_TOKEN }}
+
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Remember package.json hash
+      id: vars
+      run: echo ::set-output name=package_json_hash::$(cat package.json | openssl dgst -sha256 -binary | xxd -p -c 256)
+
+    - run: npm install
+      env:
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+    - name: Cache node modules
+      id: cache-npm
+      uses: actions/cache@v3
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-cache-node-18-modules-${{steps.vars.outputs.package_json_hash}}
