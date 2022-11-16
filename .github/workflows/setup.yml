@@ -20,6 +20,9 @@ jobs:
       with:
         node-version: '14'
 
+    - name: Fix github deps
+      run: git config --global url."https://git@".insteadOf git://
+
     - name: Remember package.json hash
       id: vars
       run: echo ::set-output name=package_json_hash::$(cat package.json | openssl dgst -sha256 -binary | xxd -p -c 256)
