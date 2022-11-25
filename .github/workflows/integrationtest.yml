@@ -38,7 +38,7 @@ jobs:
         path: node_modules
         key: ${{ runner.os }}-cache-node-modules-${{steps.vars.outputs.package_json_hash}}
 
-    - name: MongoDB
+    - name: MongoDB server
       if: ${{ inputs.mongo }}
       uses: supercharge/mongodb-github-action@1.8.0
       with:
