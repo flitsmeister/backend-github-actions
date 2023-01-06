@@ -25,7 +25,7 @@ jobs:
         path: node_modules
         key: ${{ runner.os }}-cache-node-modules-${{steps.vars.outputs.package_json_hash}}
 
-    - run: npm run | grep prepare > /dev/null && npm run-script prepare
+    - run: npm run | grep prepare > /dev/null && npm run-script prepare || true
     - run: npm test
     - run: ./node_modules/eslint/bin/eslint.js --quiet -c node_modules/@flitsmeister/eslint/.eslintrc --ignore-pattern node_modules --ignore-pattern helpers --ignore-pattern public --ignore-pattern web .
     - run: npm run codecov
