@@ -2,6 +2,10 @@ name: Codecov master
 
 on:
   workflow_call:
+    inputs:
+      aptPackages:
+        required: false
+        type: string
     secrets:
       NPM_TOKEN:
         required: true
@@ -23,6 +27,9 @@ jobs:
     - run: npm install
       env:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    - name: Install packages
+      run: sudo apt-get install -y ${{ inputs.aptPackages }}
+      if: ${{ inputs.aptPackages }}
     - run: npm run | grep prepare > /dev/null && npm run-script prepare || true
     - run: npm run codecov
     - uses: codecov/codecov-action@v2

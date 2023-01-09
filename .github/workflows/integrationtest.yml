@@ -18,6 +18,9 @@ on:
       postgres-name:
         required: false
         type: string
+      aptPackages:
+        required: false
+        type: string
 
 jobs:
   integrationtest:
@@ -75,6 +78,10 @@ jobs:
       uses: shogo82148/actions-setup-mysql@v1
       with:
         mysql-version: '5.7'
+
+    - name: Install packages
+      run: sudo apt-get install -y ${{ inputs.aptPackages }}
+      if: ${{ inputs.aptPackages }}
 
     - run: npm run | grep prepare > /dev/null && npm run-script prepare || true
     - run: npm run integrationtest

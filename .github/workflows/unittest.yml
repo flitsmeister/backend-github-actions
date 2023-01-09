@@ -2,6 +2,10 @@ name: Unit tests
 
 on:
   workflow_call:
+    inputs:
+      aptPackages:
+        required: false
+        type: string
     secrets:
       CODECOV_TOKEN:
         required: true
@@ -24,6 +28,10 @@ jobs:
       with:
         path: node_modules
         key: ${{ runner.os }}-cache-node-modules-${{steps.vars.outputs.package_json_hash}}
+
+    - name: Install packages
+      run: sudo apt-get install -y ${{ inputs.aptPackages }}
+      if: ${{ inputs.aptPackages }}
 
     - run: npm run | grep prepare > /dev/null && npm run-script prepare || true
     - run: npm test
