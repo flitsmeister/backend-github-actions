@@ -3,7 +3,7 @@ name: Unit tests
 on:
   workflow_call:
     inputs:
-      packages:
+      aptPackages:
         required: false
         type: string
     secrets:
@@ -30,8 +30,8 @@ jobs:
         key: ${{ runner.os }}-cache-node-modules-${{steps.vars.outputs.package_json_hash}}
 
     - name: Install packages
-      run: sudo apt-get install -y ${{ inputs.packages }}
-      if: ${{ inputs.packages }}
+      run: sudo apt-get install -y ${{ inputs.aptPackages }}
+      if: ${{ inputs.aptPackages }}
 
     - run: npm run | grep prepare > /dev/null && npm run-script prepare || true
     - run: npm test
