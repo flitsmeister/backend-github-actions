@@ -29,7 +29,7 @@ jobs:
         path: node_modules
         key: ${{ runner.os }}-cache-node-18-modules-${{steps.vars.outputs.package_json_hash}}
 
-    - name: Install packages
+    - name: Install apt packages
       run: sudo apt-get install -y ${{ inputs.aptPackages }}
       if: ${{ inputs.aptPackages }}
 
