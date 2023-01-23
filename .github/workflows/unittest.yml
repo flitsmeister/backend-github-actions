@@ -29,14 +29,17 @@ jobs:
         path: node_modules
         key: ${{ runner.os }}-cache-node-modules-${{steps.vars.outputs.package_json_hash}}
 
-    - name: Install packages
+    - name: Install apt packages
       run: sudo apt-get install -y ${{ inputs.aptPackages }}
       if: ${{ inputs.aptPackages }}
+
+    - name: Install npm packages
+      run: npm install -g nyc
 
     - run: npm run | grep prepare > /dev/null && npm run-script prepare || true
     - run: npm test
     - run: ./node_modules/eslint/bin/eslint.js --quiet -c node_modules/@flitsmeister/eslint/.eslintrc --ignore-pattern node_modules --ignore-pattern helpers --ignore-pattern public --ignore-pattern web .
-    - run: npm run codecov
+    - run: nyc --reporter=json npm test
     - uses: codecov/codecov-action@v2
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
