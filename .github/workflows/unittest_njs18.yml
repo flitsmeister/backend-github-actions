@@ -27,7 +27,7 @@ jobs:
       uses: actions/cache@v3
       with:
         path: node_modules
-        key: ${{ runner.os }}-cache-node-18-modules-${{steps.vars.outputs.package_json_hash}}
+        key: ${{ runner.os }}-cache-node-18-modules-${{steps.vars.outputs.package_json_hash_njs18}}
 
     - name: Install apt packages
       run: sudo apt-get install -y ${{ inputs.aptPackages }}
