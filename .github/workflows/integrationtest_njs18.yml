@@ -34,7 +34,7 @@ jobs:
 
     - name: Remember package.json hash
       id: vars
-      run: echo "{package_json_hash_njs18}={$(cat package.json | openssl dgst -sha256 -binary | xxd -p -c 256)}" >> $GITHUB_OUTPUT
+      run: echo "package_json_hash_njs18=$(cat package.json | openssl dgst -sha256 -binary | xxd -p -c 256)" >> $GITHUB_OUTPUT
 
     - name: Cache node modules
       uses: actions/cache@v3
