@@ -22,7 +22,7 @@ jobs:
 
     - name: Remember package.json hash
       id: vars
-      run: echo "package_json_hash_njs18=$(cat package.json | openssl dgst -sha256 -binary | xxd -p -c 256)" >> $GITHUB_OUTPUT
+      run: echo "package_json_hash=$(cat package.json | openssl dgst -sha256 -binary | xxd -p -c 256)" >> $GITHUB_OUTPUT
 
     - run: npm install
       env:
@@ -33,4 +33,4 @@ jobs:
       uses: actions/cache@v3
       with:
         path: node_modules
-        key: ${{ runner.os }}-cache-node-18-modules-${{steps.vars.outputs.package_json_hash_njs18}}
+        key: ${{ runner.os }}-cache-node-18-modules-${{steps.vars.outputs.package_json_hash}}
