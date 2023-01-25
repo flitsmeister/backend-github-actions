@@ -32,7 +32,7 @@ jobs:
       if: ${{ inputs.aptPackages }}
     - run: npm run | grep prepare > /dev/null && npm run-script prepare || true
     - run: npm run codecov
-    - uses: codecov/codecov-action@v2
+    - uses: codecov/codecov-action@v3
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
         files: coverage/coverage-final.json
