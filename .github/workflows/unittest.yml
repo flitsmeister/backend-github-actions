@@ -40,7 +40,7 @@ jobs:
     - run: npm test
     - run: ./node_modules/eslint/bin/eslint.js --quiet -c node_modules/@flitsmeister/eslint/.eslintrc --ignore-pattern node_modules --ignore-pattern helpers --ignore-pattern public --ignore-pattern web .
     - run: nyc --reporter=json npm test
-    - uses: codecov/codecov-action@v2
+    - uses: codecov/codecov-action@v3
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
         files: coverage/coverage-final.json
