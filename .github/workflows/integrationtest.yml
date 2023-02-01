@@ -57,9 +57,9 @@ jobs:
 
     - name: Postgres
       if: ${{ inputs.postgres }}
-      uses: ireznik/postgis-action@v12
+      uses: ireznik/postgis-action@v13
       with:
-        postgresql version: '12-master'
+        postgresql version: '13-master'
         postgresql db: ${{ inputs.postgres-name }}
         postgresql user: ${{ inputs.postgres-name }}
         postgresql password: ${{ inputs.postgres-name }}
