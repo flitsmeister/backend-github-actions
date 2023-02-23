@@ -31,7 +31,7 @@ jobs:
       id: vars
       run: echo "package_json_hash=$(cat package.json | openssl dgst -sha256 -binary | xxd -p -c 256)" >> $GITHUB_OUTPUT
 
-    - run: npm install
+    - run: BLA="15" npm install
 
     - run: npm run other_install
       if: ${{ inputs.other_install }}
