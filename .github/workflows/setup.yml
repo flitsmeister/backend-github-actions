@@ -35,7 +35,7 @@ jobs:
       env:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-    - run: npm run other_install
+    - run: NPM_TOKEN=$NPM_TOKEN npm run other_install
       if: ${{ inputs.other_install }}
       env:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
