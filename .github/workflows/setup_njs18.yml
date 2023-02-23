@@ -12,7 +12,7 @@ jobs:
     if: ${{ !github.event.pull_request.draft }}
     steps:
     - uses: actions/checkout@v3
-    - uses: flitsmeister/backend-github-actions@feature/other_install
+    - uses: flitsmeister/backend-github-actions@master
       with:
         npm_token: ${{ secrets.NPM_TOKEN }}
 
