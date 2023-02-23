@@ -11,3 +11,5 @@ runs:
       shell: bash
     - run: echo '//registry.npmjs.org/:_authToken=${{ inputs.npm_token  }}' > ${{ github.workspace }}/.npmrc
       shell: bash
+    - run: echo 'My GH workspace is ${{ github.workspace }}'
+      shell: bash
