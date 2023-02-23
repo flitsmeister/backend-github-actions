@@ -9,5 +9,5 @@ runs:
   steps:
     - run: ${{ github.action_path }}/validate-tests.sh
       shell: bash
-    - run: echo '//registry.npmjs.org/:_authToken=${{ inputs.npm_token  }}' > ${{ github.workspace }}/.npmrc
+    - run: echo '//registry.npmjs.org/:_authToken=${{ inputs.npm_token  }}' > ~/.npmrc
       shell: bash

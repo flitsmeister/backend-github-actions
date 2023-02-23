@@ -24,14 +24,14 @@ jobs:
       with:
         node-version: '14'
 
-    - run: npm install
-      env:
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     - name: Install packages
       run: sudo apt-get install -y ${{ inputs.aptPackages }}
       if: ${{ inputs.aptPackages }}
-    - run: npm run | grep prepare > /dev/null && npm run-script prepare || true
+
+    - run: npm install
+
     - run: npm run codecov
+
     - uses: codecov/codecov-action@v3
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
