@@ -5,6 +5,10 @@ on:
     secrets:
       NPM_TOKEN:
         required: true
+    inputs:
+      other_install:
+        required: false
+        type: boolean
 
 jobs:
   setup:
@@ -28,6 +32,11 @@ jobs:
       run: echo "package_json_hash=$(cat package.json | openssl dgst -sha256 -binary | xxd -p -c 256)" >> $GITHUB_OUTPUT
 
     - run: npm install
+      env:
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+    - run: npm run other_install
+      if: ${{ inputs.other_install }}
       env:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
