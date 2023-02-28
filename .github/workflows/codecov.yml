@@ -30,7 +30,10 @@ jobs:
 
     - run: npm install
 
-    - run: npm run codecov
+    - name: Install npm packages
+      run: npm install -g nyc
+
+    - run: nyc --reporter=json npm test
 
     - uses: codecov/codecov-action@v3
       with:
