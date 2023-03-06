@@ -81,7 +81,7 @@ jobs:
         mysql-version: '5.7'
 
     - name: Install packages
-      run: sudo apt-get install -y ${{ inputs.aptPackages }}
+      run: sudo apt-get update; sudo apt-get install -y ${{ inputs.aptPackages }}
       if: ${{ inputs.aptPackages }}
 
     - run: npm run integrationtest
