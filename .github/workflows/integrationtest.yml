@@ -83,4 +83,5 @@ jobs:
       run: sudo apt-get update; sudo apt-get install -y ${{ inputs.aptPackages }}
       if: ${{ inputs.aptPackages }}
 
+    - run: npm run | grep setup > /dev/null && npm run-script setup || true
     - run: npm run integrationtest
