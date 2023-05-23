@@ -5,6 +5,8 @@ on:
     secrets:
       NPM_TOKEN:
         required: true
+      CI_SSH_KEY:
+        required: false
 
 jobs:
   setup:
