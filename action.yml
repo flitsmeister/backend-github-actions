@@ -4,7 +4,7 @@ inputs:
   npm_token:
      description: "npm access token"
      required: true
-  ci_ssh_token:
+  ci_ssh_key:
      description: "Optional ssh key for fm-ci user"
      required: false
 runs:
@@ -14,6 +14,6 @@ runs:
       shell: bash
     - run: echo '//registry.npmjs.org/:_authToken=${{ inputs.npm_token  }}' > ~/.npmrc
       shell: bash
-    - run: mkdir ~/.ssh && echo '${{ inputs.ci_ssh_token  }}' > ~/.ssh/id_rsa && chmod 0600 ~/.ssh/id_rsa
+    - run: mkdir ~/.ssh && echo '${{ inputs.ci_ssh_key  }}' > ~/.ssh/id_rsa && chmod 0600 ~/.ssh/id_rsa
       shell: bash
-      if: ${{ inputs.ci_ssh_token  }}
+      if: ${{ inputs.ci_ssh_key  }}
