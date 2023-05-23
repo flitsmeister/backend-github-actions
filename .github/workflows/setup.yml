@@ -14,7 +14,7 @@ jobs:
     if: ${{ !github.event.pull_request.draft }}
     steps:
     - uses: actions/checkout@v3
-    - uses: flitsmeister/backend-github-actions@ssh-access
+    - uses: flitsmeister/backend-github-actions@master
       with:
         npm_token: ${{ secrets.NPM_TOKEN }}
         ci_ssh_key: ${{ secrets.CI_SSH_KEY }}
