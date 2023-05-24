@@ -5,6 +5,8 @@ on:
     secrets:
       NPM_TOKEN:
         required: true
+      CI_SSH_KEY:
+        required: false
 
 jobs:
   setup:
@@ -15,6 +17,7 @@ jobs:
     - uses: flitsmeister/backend-github-actions@master
       with:
         npm_token: ${{ secrets.NPM_TOKEN }}
+        ci_ssh_key: ${{ secrets.CI_SSH_KEY }}
 
     - uses: actions/setup-node@v3
       with:
