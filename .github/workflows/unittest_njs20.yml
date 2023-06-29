@@ -1,0 +1,38 @@
+name: Unit tests
+
+on:
+  workflow_call:
+    inputs:
+      aptPackages:
+        required: false
+        type: string
+    secrets:
+      CODECOV_TOKEN:
+        required: true
+
+jobs:
+  unittest:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+
+    - name: Remember package.json hash
+      id: vars
+      run: echo "package_json_hash=$(cat package.json | openssl dgst -sha256 -binary | xxd -p -c 256)" >> $GITHUB_OUTPUT
+
+    - name: Cache node modules
+      uses: actions/cache@v3
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-cache-node-20-modules-${{steps.vars.outputs.package_json_hash}}
+
+    - name: Install apt packages
+      run: sudo apt-get update; sudo apt-get install -y ${{ inputs.aptPackages }}
+      if: ${{ inputs.aptPackages }}
+
+    - run: npm run | grep setup > /dev/null && npm run-script setup || true
+    - run: npm test
+    - run: ./node_modules/eslint/bin/eslint.js --quiet -c node_modules/@flitsmeister/eslint/.eslintrc --ignore-pattern node_modules --ignore-pattern helpers --ignore-pattern public --ignore-pattern web --ignore-pattern build --ignore-pattern src .
