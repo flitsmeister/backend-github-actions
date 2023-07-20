@@ -21,7 +21,9 @@ on:
       aptPackages:
         required: false
         type: string
-
+      googleCloudSdk:
+        required: false
+        type: boolean
 
 jobs:
   integrationtest:
@@ -83,6 +85,10 @@ jobs:
     - name: Install packages
       run: sudo apt-get update; sudo apt-get install -y ${{ inputs.aptPackages }}
       if: ${{ inputs.aptPackages }}
+
+    - name: Google cloud SDK
+      uses: google-github-actions/setup-gcloud@v1
+      if: ${{ inputs.googleCloudSdk }}
 
     - run: npm run | grep setup > /dev/null && npm run-script setup || true
     - run: npm run integrationtest
