@@ -36,6 +36,9 @@ jobs:
     - run: npm run | grep setup > /dev/null && npm run-script setup || true
     - run: npm test
     - run: ./node_modules/eslint/bin/eslint.js --quiet -c node_modules/@flitsmeister/eslint/.eslintrc --ignore-pattern node_modules --ignore-pattern helpers --ignore-pattern public --ignore-pattern web --ignore-pattern build --ignore-pattern src .
+
+    - name: Install npm packages
+      run: npm install -g nyc
     - run: nyc --reporter=json npm test -- -v
     - uses: codecov/codecov-action@v3
       with:
