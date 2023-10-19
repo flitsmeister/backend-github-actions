@@ -80,7 +80,7 @@ jobs:
       if: ${{ inputs.mysql }}
       uses: shogo82148/actions-setup-mysql@v1
       with:
-        mysql-version: '5.7'
+        mysql-version: '8.0'
 
     - name: Install packages
       run: sudo apt-get update; sudo apt-get install -y ${{ inputs.aptPackages }}
