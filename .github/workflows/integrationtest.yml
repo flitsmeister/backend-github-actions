@@ -81,6 +81,8 @@ jobs:
       uses: shogo82148/actions-setup-mysql@v1
       with:
         mysql-version: '8.0'
+        my-cnf: |
+          authentication-policy=mysql_native_password
 
     - name: Install packages
       run: sudo apt-get update; sudo apt-get install -y ${{ inputs.aptPackages }}
