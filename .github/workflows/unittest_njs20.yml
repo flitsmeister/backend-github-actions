@@ -42,5 +42,5 @@ jobs:
     - name: Run unit tests
       run: npm test
     - name: Run unit tests multiple times to find flaky tests
-      run: for i in `seq 5`; do npm test; done
+      run: "for i in `seq 5`; do npm test; done"
       if: ${{ ! inputs.skipFlakyCheck }}
