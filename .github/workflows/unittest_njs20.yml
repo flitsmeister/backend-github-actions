@@ -6,6 +6,10 @@ on:
       aptPackages:
         required: false
         type: string
+    inputs:
+      skipFlakyCheck:
+        required: false
+        type: boolean
     secrets:
       CODECOV_TOKEN:
         required: true
@@ -39,3 +43,4 @@ jobs:
       run: npm test
     - name: Run unit tests multiple times to find flaky tests
       run: for i in `seq 5`; do npm test; done
+      if: ${{ ! inputs.skipFlakyCheck }}
