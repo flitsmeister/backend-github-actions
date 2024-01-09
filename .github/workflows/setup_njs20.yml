@@ -7,6 +7,10 @@ on:
         required: true
       CI_SSH_KEY:
         required: false
+    inputs:
+      skipValidations:
+        required: false
+        type: boolean
 
 jobs:
   setup:
@@ -18,6 +22,7 @@ jobs:
       with:
         npm_token: ${{ secrets.NPM_TOKEN }}
         ci_ssh_key: ${{ secrets.CI_SSH_KEY }}
+      if: ${{ ! inputs.skipValidations }}
 
     - uses: actions/setup-node@v3
       with:
