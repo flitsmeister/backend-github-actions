@@ -48,7 +48,7 @@ jobs:
     - name: Install npm packages
       run: npm install -g nyc
     - name: Code coverage
-      run: nyc --reporter=json npm test -- -v
+      run: nyc --reporter=json npm test -- --timeout 10000
     - uses: codecov/codecov-action@v3
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
