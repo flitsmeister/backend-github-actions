@@ -20,4 +20,4 @@ jobs:
         node-version: '18'
 
     - run: >
-        sed "s,"version": "0.0.0","version": ${{ github.event.release.tag_name }}," -i package.json; npm publish
+        sed "s,\"version\": \"0.0.0\",\"version\": \"${{ github.event.release.tag_name }}\"," -i package.json; npm publish
