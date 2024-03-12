@@ -38,17 +38,23 @@ jobs:
 
     - name: Run setup script if available
       run: npm run | grep setup > /dev/null && npm run-script setup || true
+
     - name: Run unit tests
       run: npm test
+
     - name: Run unit tests multiple times to find flaky tests
       run: for i in `seq 5`; do npm test; done
       if: ${{ ! inputs.skipFlakyCheck }}
+
     - name: Linting
       run: ./node_modules/eslint/bin/eslint.js --quiet -c node_modules/@flitsmeister/eslint/.eslintrc --ignore-pattern node_modules --ignore-pattern helpers --ignore-pattern public --ignore-pattern web --ignore-pattern build --ignore-pattern src .
+
     - name: Install npm packages
       run: npm install -g nyc
+
     - name: Code coverage
       run: nyc --reporter=json npm test -- --timeout 10000
+
     - uses: codecov/codecov-action@v3
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
